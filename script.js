@@ -1,42 +1,60 @@
-class Usuario {
-  constructor(nombre, apellido, libro, autor, mascotas) {
+
+
+class Contenedor {
+  constructor(nombre, precio, foto, id) {
     this.nombre = nombre;
-    this.apellido = apellido;
-    this.libros = [
-      {
-        nombreLibro: libro,
-        autorLibro: autor,
-      },
-    ];
-    this.mascotas = [mascotas];
+    this.precio = precio;
+    this.foto = foto;
+    this.id = id;
   }
-  getFullName() {
-    console.log(this.nombre, this.apellido);
+
+  save(obj) {
+    console.log(obj.id);
   }
-  addMascota(a) {
-    this.mascotas.push(a);
-    console.log(this.mascotas);
+
+  getById(num) {
+    console.log(num.find(num => num === num.id))
   }
-  countMascota() {
-    console.log(this.mascotas.length);
+
+  async getAll() {
+    
   }
-  addBook(a, b) {
-    let object = { nombreLibro: a, autorLibro: b };
-    this.libros.push(object);
+
+  deleteById(num) {
+
   }
-  getBookNames() {
-    let arr = [];
-    for (let i = 0; i < this.libros.length; i++) {
-      arr.push(this.libros[i].nombreLibro);
-    }
-    console.log(arr);
+
+  deleteAll() {
+    
   }
 }
 
-const carlos = new Usuario("Carlos", "Gardel", "Gioconda", "Da Vinci", "Lola");
+let cont = new Contenedor('Jarron', 20, 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Chinese_vase.jpg/800px-Chinese_vase.jpg', 1)
+let cont1 = new Contenedor('Autito', 230, 'imagen', 2)
+let cont2 = new Contenedor('Termo', 2450, 'imagen', 3)
 
-carlos.getFullName();
-carlos.addMascota("Pepo");
-carlos.countMascota();
-carlos.addBook("Cien años de soledad", "Gabriel Garcia Marquez");
-carlos.getBookNames();
+cont2.save()
+
+// const http = require('http')
+
+// const server = http.createServer((peticion, respuesta) => {
+//   respuesta.end(getHora())
+// })
+
+// const connectedServer = server.listen(8080, () => {
+//   console.log('server http escuchando puerto 8080');
+// })
+
+// function getHora() {
+//   const hora = new Date().getHours()
+
+//   const connectedServer = server.listen(8080, () => {
+//     if (hora >= 6 || hora <= 12) {
+//       return ('Buenos días')
+//     } else if (hora >= 13 && hora <= 19) {
+//       return ('Buenas tardes')
+//     } else {
+//       return ('Buenas noches')
+//     }
+//   })
+// }
