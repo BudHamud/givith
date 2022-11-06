@@ -1,4 +1,24 @@
 const fs = require("fs/promises");
+const hora = new Date().getHours()
+
+// server
+
+const http = require('http')
+const server = http.createServer((req, ans) => {
+  if (hora >= 6 && hora <= 12) {
+    ans.end('Buenos días')
+  }
+  else if (hora >= 13 && hora <= 18) {
+    ans.end('Buenas tardes')
+  } else {
+    ans.end('Buenas noches')
+  }
+})
+const connectedServer = server.listen(8080, () => {
+  console.log(`Servidor Http escuchando en el puerto ${connectedServer.address().port}`);
+})
+
+// -- // -- // -- // -- // -- // -- //
 
 class Contenedor {
   constructor(path) {
