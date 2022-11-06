@@ -1,60 +1,70 @@
-
+const fs = require("fs/promises");
 
 class Contenedor {
-  constructor(nombre, precio, foto, id) {
-    this.nombre = nombre;
-    this.precio = precio;
-    this.foto = foto;
-    this.id = id;
+  constructor(path) {
+    this.path = path;
   }
 
-  save(obj) {
-    console.log(obj.id);
+  async save(obj) {
+    try {
+      const leer = await fs.readFile(this.path, "utf-8");
+      const data = JSON.parse(leer);
+      let id;
+      data.length === 0 ? (id = 1) : (id = data[data.length - 1].id + 1);
+      const nuevoProducto = { ...obj, id };
+      data.push(nuevoProducto);
+      await fs.writeFile(this.path, JSON.stringify(data, null, 2), "utf-8");
+      return nuevoProducto.id;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  getById(num) {
-    console.log(num.find(num => num === num.id))
+  async getById(id) {
+    const leer = await fs.readFile(this.path, "utf-8");    
+    const data = JSON.parse(leer);
+    const obj = data.find(e => e.id === id)
+    return obj
   }
 
   async getAll() {
-    
+    const leer = await fs.readFile(this.path, "utf-8");
+    return JSON.parse(leer);
   }
 
-  deleteById(num) {
-
+  async deleteById(id) {
+    const leer = await fs.readFile(this.path, "utf-8");    
+    const data = JSON.parse(leer);
+    const obj = data.find(e => e.id === id)
+    data.splice(data.indexOf(obj), 1)
+    await fs.writeFile(this.path, JSON.stringify(data, null, 2), "utf-8");
   }
 
-  deleteAll() {
-    
+  async deleteAll() {
+    try {
+      await fs.writeFile(this.path, JSON.stringify([], null, 2), "utf-8");
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
 
-let cont = new Contenedor('Jarron', 20, 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Chinese_vase.jpg/800px-Chinese_vase.jpg', 1)
-let cont1 = new Contenedor('Autito', 230, 'imagen', 2)
-let cont2 = new Contenedor('Termo', 2450, 'imagen', 3)
+const productos = new Contenedor("./products.json");
 
-cont2.save()
+const producto1 = {
+  nombre: "Oldboy",
+  precio: 3900,
+  stock: 11,
+};
 
-// const http = require('http')
+const producto2 = {
+  nombre: "20th Century Boys",
+  precio: 3950,
+  stock: 9,
+};
 
-// const server = http.createServer((peticion, respuesta) => {
-//   respuesta.end(getHora())
-// })
-
-// const connectedServer = server.listen(8080, () => {
-//   console.log('server http escuchando puerto 8080');
-// })
-
-// function getHora() {
-//   const hora = new Date().getHours()
-
-//   const connectedServer = server.listen(8080, () => {
-//     if (hora >= 6 || hora <= 12) {
-//       return ('Buenos días')
-//     } else if (hora >= 13 && hora <= 19) {
-//       return ('Buenas tardes')
-//     } else {
-//       return ('Buenas noches')
-//     }
-//   })
-// }
+const producto3 = {
+  nombre: "Banana Fish",
+  precio: 1900,
+  stock: 16,
+};
