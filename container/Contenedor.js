@@ -1,48 +1,44 @@
-const fs = require('fs/promises')
-
 class Contenedor {
-    constructor(path) {
-      this.path = path;
+    constructor() {
+      this.productos = [];
     }
 
-    async getAll() {
-      const leer = await fs.readFile(this.path, "utf-8");
-      return JSON.parse(leer);
+    getAll() {
+      return this.productos
     }
-  
-    async save(obj) {
-      try {
-        const data = this.getAll()
-        let id;
-        data.length === 0 ? (id = 1) : (id = data[data.length - 1].id + 1);
-        const nuevoProducto = { ...obj, id };
-        data.push(nuevoProducto);
-        await fs.writeFile(this.path, JSON.stringify(data, null, 2), "utf-8");
-        return nuevoProducto.id;
-      } catch (e) {
-        console.log(e);
+
+    getById(id) {
+      const myObj = this.productos.find((e) => e.id === id)
+      if (myObj) {
+        return myObj
+      } else {
+        return { error: 'producto no encontrado' }
       }
     }
   
-    async getById(id) {    
-      const data = this.getAll()
-      const obj = data.find(e => e.id === id)
-      return obj
+    save(obj) {    
+      const arr = this.productos.map((e) => e.id)
+      const maxId = arr.length === 0 ? 0 : Math.max(...arr)
+      const id = maxId + 1
+      const nuevoObj = { id, ...obj }
+      this.productos.push(nuevoObj)
+      return nuevoObj
     }
-  
-    async deleteById(id) {   
-      const data = this.getAll()
-      const obj = data.find(e => e.id === id)
-      data.splice(data.indexOf(obj), 1)
-      await fs.writeFile(this.path, JSON.stringify(data, null, 2), "utf-8");
-    }
-  
-    async deleteAll() {
-      try {
-        await fs.writeFile(this.path, JSON.stringify([], null, 2), "utf-8");
-      } catch (e) {
-        console.log(e);
+
+    updById(id, obj) {
+      const myObj = this.productos.find((e) => e.id === id)
+      if (myObj) {
+        const filter = this.productos.filter((e) => e.id != id)
+        const nuevoObj = { id, ...obj }
+        this.productos = [...filter, nuevoObj]
+        return nuevoObj
+      } else {
+        return { error: 'producto no encontrado' }
       }
+    }
+  
+    deleteById(id) {
+      return this.productos.splice(id-1, 1)
     }
   }
 
