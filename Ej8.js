@@ -17,8 +17,12 @@ router.get('/:id', (req, res) => {
     res.send(producto)
 })
 
+const getData = () => {
+    alert('a')
+}
+
 router.post('/', (req, res) => {
-    const obj = req.body
+    const obj = document.getElementById('nombre')
     const nuevoObj = contenedor.save(obj)
     res.send(nuevoObj)
 })
