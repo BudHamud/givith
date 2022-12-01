@@ -1,3 +1,5 @@
+// si no sacas las carpetas de acà va a tirar error porque no va a estar tomando el node_modules
+
 const express = require('express')
 const app = express()
 
