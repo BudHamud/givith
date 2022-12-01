@@ -5,7 +5,7 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon Ej8.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/BudHamud/givith#readme",
   "dependencies": {
+    "ejs": "^3.1.8",
     "express": "^4.18.2",
     "moment": "^2.29.4",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "pug": "^3.0.2"
   }
 }
