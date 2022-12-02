@@ -43,7 +43,6 @@ io.on('connection', socket => {
 
         io.sockets.emit('producto', prod)
     })
-    console.log(prod);
 })
 
 httpServer.listen(PORT, () => {
