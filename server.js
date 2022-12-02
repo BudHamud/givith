@@ -11,9 +11,14 @@ app.use(express.static('./public'))
 const PORT = 8080
 
 const msg = [
-    { autor: 'Brodi', texto: 'Cómo viene eso?' },
-    { autor: 'Lobby', texto: 'Bien' },
-    { autor: 'Brodi', texto: 'Que bueno che' }
+    { fecha: '00:53:21' , autor: 'Brodi', texto: 'Cómo viene eso?' },
+    { fecha: '00:53:49' , autor: 'Lobby', texto: 'Bien' },
+    { fecha: '00:59:02' , autor: 'Brodi', texto: 'Que bueno che' }
+]
+
+const prod = [
+    { producto: 'Banana', precio: 120 },
+    { producto: 'Durazno', precio: 80 }
 ]
 
 io.on('connection', socket => {
@@ -26,6 +31,19 @@ io.on('connection', socket => {
 
         io.sockets.emit('mensaje', msg)
     })
+})
+
+io.on('connection', socket => {
+    console.log('Nuevo producto');
+
+    socket.emit('producto', prod)
+
+    socket.on('nuevo-producto', data => {
+        prod.push(data)
+
+        io.sockets.emit('producto', prod)
+    })
+    console.log(prod);
 })
 
 httpServer.listen(PORT, () => {

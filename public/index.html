@@ -16,7 +16,11 @@
 
         <form onsubmit="return addMsg(this)" method="#">
           <p>Autor:</p>
-          <input type="text" id="autor" />
+          <select id="autor">
+            <option disabled selected></option>
+            <option value="Brodi">Brodi</option>
+            <option value="Lobby">Lobby</option>
+          </select>
           <p>Mensaje:</p>
           <input type="text" id="texto" />
 
@@ -24,6 +28,27 @@
         </form>
 
         <div id="mensajes"></div>
+
+        <h2>Productos</h2>  
+          
+        <form onsubmit="return addProd(this)" method="#">
+            <p>Producto:</p>
+            <input type="text" id="producto">
+            <p>Precio:</p>
+            <input type="number" id="precio" />
+  
+            <input type="submit" value="Enviar">
+        </form>
+
+          <table>
+            <tr>   
+                <th>Producto</th>
+                <th>Precio</th>
+            </tr>
+          </table>
+          <table id="productos">
+
+          </table>
       </main>
 
       <script src="js/index.js"></script>
