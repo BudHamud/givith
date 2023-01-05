@@ -7,11 +7,18 @@ const app: Express = express()
 const port: number = 8080
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Bienvenido, Ahu ahu')
+    const obj = {
+        data: { messsage: 'Goodbye World' }
+    }
+    res.json(obj)
 })
 
-app.get('/shu', (req: Request, res: Response) => {
-    res.send('Ana Shu Shu')
+app.get('/:msg', (req: Request, res: Response) => {
+    const path = req.params['msg']
+    const obj = {
+        data: { messsage: `Hello, ${path}` }
+    }
+    res.json(obj)
 })
 
 app.listen(port, () => {

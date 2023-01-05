@@ -9,10 +9,17 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = 8080;
 app.get('/', (req, res) => {
-    res.send('Bienvenido, Ahu ahu');
+    const obj = {
+        data: { messsage: 'Goodbye World' }
+    };
+    res.json(obj);
 });
-app.get('/shu', (req, res) => {
-    res.send('Ana Shu Shu');
+app.get('/:msg', (req, res) => {
+    const path = req.params['msg'];
+    const obj = {
+        data: { messsage: `Hello, ${path}` }
+    };
+    res.json(obj);
 });
 app.listen(port, () => {
     console.log(`Puerto ${port}`);
