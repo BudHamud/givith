@@ -1,26 +1,15 @@
-import express, { Express, Request, Response } from 'express'
 import dotenv from 'dotenv'
+import server from './src/server'
+import { LogSuccess, LogError } from './src/utils/logger'
 
 dotenv.config()
 
-const app: Express = express()
-const port: number = 8080
+const PORT = 8080 // process.env.PORT
 
-app.get('/', (req: Request, res: Response) => {
-    const obj = {
-        data: { messsage: 'Goodbye World' }
-    }
-    res.json(obj)
+server.listen(PORT, () => {
+    LogSuccess(`Puerto ${PORT}`)
 })
 
-app.get('/:msg', (req: Request, res: Response) => {
-    const path = req.params['msg']
-    const obj = {
-        data: { messsage: `Hello, ${path}` }
-    }
-    res.json(obj)
-})
-
-app.listen(port, () => {
-    console.log(`Puerto ${port}`);
+server.on('error', (error) => {
+    LogError(`Error en puerto ${PORT}`)
 })
